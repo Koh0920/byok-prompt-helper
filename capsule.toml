@@ -1,0 +1,9 @@
+schema_version = "1.0"
+name = "byok-prompt-helper"
+version = "0.1.0"
+description = "Image generation prompt helper"
+type = "app"
+
+[execution]
+runtime = "source"
+entrypoint = "index.html"

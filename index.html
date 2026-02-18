@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BYOK Prompt Helper</title>
+<style>
+  body { font-family: system-ui; margin: 0; background: #0b1020; color: #eaf0ff; }
+  .wrap { max-width: 900px; margin: 20px auto; padding: 0 14px; }
+  .card { background: #141b33; border: 1px solid #2a355d; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  input, select, textarea, button { border-radius: 8px; border: 1px solid #304173; background: #0f1733; color: #eaf0ff; padding: 8px; }
+  textarea { width: 100%; min-height: 170px; }
+  button { cursor: pointer; }
+</style>
+<div class="wrap">
+  <h1>画像生成プロンプト作成補助</h1>
+  <div class="card grid">
+    <input id="subject" placeholder="被写体 (e.g., cyberpunk cat)" />
+    <select id="style"><option>photorealistic</option><option>anime</option><option>pixel art</option><option>watercolor</option></select>
+    <input id="lighting" value="soft rim light" placeholder="ライティング" />
+    <input id="camera" value="35mm, shallow depth of field" placeholder="カメラ/構図" />
+    <input id="mood" value="dramatic" placeholder="雰囲気" />
+    <input id="negative" value="blurry, low quality, watermark" placeholder="negative prompt" />
+  </div>
+  <div class="card"><button id="gen">生成</button> <button id="copy">コピー</button></div>
+  <div class="card"><textarea id="out"></textarea></div>
+</div>
+<script>
+  const v = (id) => document.getElementById(id).value.trim();
+  function generate() {
+    const prompt = [
+      `subject: ${v("subject") || "scene"}`,
+      `style: ${v("style")}`,
+      `lighting: ${v("lighting")}`,
+      `camera: ${v("camera")}`,
+      `mood: ${v("mood")}`,
+      "high detail, 4k, clean composition",
+      `negative: ${v("negative")}`,
+    ].join(", ");
+    document.getElementById("out").value = prompt;
+  }
+  document.getElementById("gen").onclick = generate;
+  document.getElementById("copy").onclick = async () => {
+    await navigator.clipboard.writeText(document.getElementById("out").value);
+  };
+  generate();
+</script>
