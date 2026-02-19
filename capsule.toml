@@ -1,9 +1,11 @@
-schema_version = "1.0"
+schema_version = "0.2"
 name = "byok-prompt-helper"
 version = "0.1.0"
 description = "Image generation prompt helper"
 type = "app"
+default_target = "static"
 
-[execution]
-runtime = "source"
+[targets.static]
+runtime = "web"
 entrypoint = "index.html"
+public = ["index.html"]
